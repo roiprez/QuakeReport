@@ -12,16 +12,20 @@ public class Earthquake {
     private double magnitude;
     private String location;
     private long time;
+    private String url;
 
 
-    public Earthquake(double magnitude, long time, String location){
+    public Earthquake(double magnitude, long time, String location, String url){
         this.magnitude = magnitude;
         this.location = location;
         this.time = time;
+        this.url = url;
 
     }
 
-
+    public String getUrl(){
+        return url;
+    }
 
     public Double getMagnitude() {
         return magnitude;

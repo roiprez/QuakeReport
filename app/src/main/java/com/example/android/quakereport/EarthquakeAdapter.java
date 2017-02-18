@@ -42,7 +42,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake>{
         DecimalFormat mag = new DecimalFormat("0.0");
 
         // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude_text_view);
+        TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         magnitudeTextView.setText(mag.format(currentEarthquake.getMagnitude()));
@@ -53,7 +53,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake>{
 
         // Get the appropriate background color based on the current earthquake magnitude
         // The second attribute of the function is a private function to obtain the color according to the magnitude of the earthquake
-        int magnitudeColor = ContextCompat.getColor(getContext(), getMagnitudeColor(currentEarthquake.getMagnitude()));
+        int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
 
         Log.e("ColorCircle", String.valueOf(magnitudeColor));
 
@@ -74,24 +74,24 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake>{
         }
 
         // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView locationTextView = (TextView) listItemView.findViewById(R.id.location_text_view);
+        TextView locationTextView = (TextView) listItemView.findViewById(R.id.primary_location);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         locationTextView.setText(primaryLocation);
 
-        TextView distanceTextView = (TextView) listItemView.findViewById(R.id.distance_text_view);
+        TextView distanceTextView = (TextView) listItemView.findViewById(R.id.location_offset);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         distanceTextView.setText(locationOffset);
 
         // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView dateTextView = (TextView) listItemView.findViewById(R.id.date_text_view);
+        TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         dateTextView.setText(currentEarthquake.getDate());
 
         // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView timeTextView = (TextView) listItemView.findViewById(R.id.time_text_view);
+        TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         timeTextView.setText(currentEarthquake.getTime());
@@ -102,21 +102,23 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake>{
     }
 
     private int getMagnitudeColor(Double d) {
-        int mag = d.intValue();
+        // The floor method finds the closest integer to the magnitude
+        int mag = (int) Math.floor(d);
+        int toret;
         switch(mag){
-            case 1: return R.color.magnitude1;
-            case 2: return R.color.magnitude2;
-            case 3: return R.color.magnitude3;
-            case 4: return R.color.magnitude4;
-            case 5: return R.color.magnitude5;
-            case 6: return R.color.magnitude6;
-            case 7: return R.color.magnitude7;
-            case 8: return R.color.magnitude8;
-            case 9: return R.color.magnitude9;
-            case 10: return R.color.magnitude10plus;
-            default: return 0;
+            case 0:
+            case 1: toret = R.color.magnitude1; break;
+            case 2: toret = R.color.magnitude2; break;
+            case 3: toret = R.color.magnitude3; break;
+            case 4: toret = R.color.magnitude4; break;
+            case 5: toret = R.color.magnitude5; break;
+            case 6: toret = R.color.magnitude6; break;
+            case 7: toret = R.color.magnitude7; break;
+            case 8: toret = R.color.magnitude8; break;
+            case 9: toret = R.color.magnitude9; break;
+            default: toret = R.color.magnitude10plus;
         }
-
+        return ContextCompat.getColor(getContext(), toret);
     }
 
 
